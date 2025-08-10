@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Welcome to Gameness Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+  :root {
+    --bg: #0f1218;
+    --blue: #4fc3ff;
+    --glow: rgba(79,195,255,.6);
+    --text: #d9e2ff;
+    --muted: #8a9bb8;
+
+    /* Dark mode vars */
+    --bg-dark: #11171f;
+    --text-dark: #aab9ff;
+    --blue-dark: #80c7ff;
+  }
+
+  /* Dark mode styles */
+  body.dark {
+    background: radial-gradient(circle at 20% 30%, #121923 0%, var(--bg-dark) 80%);
+    color: var(--text-dark);
+  }
+  body.dark .sidebar {
+    background: #141a2a;
+    border-right-color: rgba(128, 199, 255, 0.2);
+    box-shadow: 5px 0 20px rgba(128,199,255,0.4);
+  }
+  body.dark .menu-btn span {
+    background: var(--blue-dark);
+    box-shadow: 0 0 8px var(--blue-dark);
+  }
+  body.dark .menu-btn.active span:nth-child(1),
+  body.dark .menu-btn.active span:nth-child(3) {
+    background: var(--blue-dark);
+  }
+  body.dark .nav a {
+    color: var(--blue-dark);
+    background: rgba(255,255,255,0.05);
+  }
+  body.dark .nav a:hover,
+  body.dark .nav a.active {
+    background: var(--blue-dark);
+    color: #0f1218;
+    box-shadow: 0 0 20px var(--blue-dark);
+  }
+  body.dark .btn {
+    background: var(--blue-dark);
+    color: #0f1218;
+    box-shadow: 0 0 18px var(--blue-dark);
+  }
+  body.dark .btn:hover {
+    box-shadow: 0 0 30px #44c6ff, 0 0 40px #33b6ff;
+  }
+  body.dark .sidebar-footer {
+    color: var(--text-dark);
+    border-top-color: rgba(255,255,255,0.1);
+  }
+  body.dark .cursor {
+    border-color: var(--blue-dark);
+    box-shadow: 0 0 12px var(--blue-dark);
+  }
+  body.dark h1.main-title {
+    filter: drop-shadow(0 0 20px var(--blue-dark));
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Hide native cursor on body and html */
+  body, html {
+    cursor: none;
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at 20% 30%, #1a2139 0%, var(--bg) 80%);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* Show native cursor on sidebar, menu button, and sidebar links */
+  .sidebar,
+  .menu-btn,
+  .nav a,
+  .nav a * {
+    cursor: auto !important;
+  }
+
+  video#bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    filter: brightness(0.4) contrast(1.2);
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 16px; height: 16px;
+    position: fixed;
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 12px var(--glow);
+    transform: translate(-50%, -50%);
+    animation: pulse 1.6s infinite;
+    z-index: 1100;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.7; }
+  }
+
+  /* MENU BUTTON - Hamburger / Close toggle */
+  .menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1200;
+    width: 40px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+  }
+
+  .menu-btn span {
+    display: block;
+    height: 4px;
+    background: var(--blue);
+    border-radius: 3px;
+    box-shadow: 0 0 8px var(--glow);
+    transition: all 0.3s ease;
+  }
+
+  /* Hamburger lines */
+  .menu-btn span:nth-child(1) {
+    width: 100%;
+  }
+  .menu-btn span:nth-child(2) {
+    width: 70%;
+  }
+  .menu-btn span:nth-child(3) {
+    width: 40%;
+  }
+
+  /* When active (menu open) - transform hamburger to X */
+  .menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg);
+    width: 100%;
+  }
+  .menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    width: 100%;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: -280px; /* hide outside */
+    width: 280px;
+    height: 100vh;
+    background: #0e1325;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
+    box-shadow: 5px 0 20px rgba(0, 200, 255, 0.3);
+    border-right: 1px solid rgba(255,255,255,.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+    z-index: 1150;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* Sidebar title */
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--blue);
+    text-shadow: 0 0 10px var(--glow);
+    font-size: 1.5rem;
+    user-select: none;
+  }
+  .sidebar-header .dot {
+    width: 10px; height: 10px;
+    background: var(--blue);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--glow);
+  }
+
+  /* Sidebar nav */
+  .nav ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .nav a {
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 600;
+    background: rgba(255,255,255,0.02);
+    box-shadow: 0 0 8px rgba(79,195,255,0.1);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Sidebar icons */
+  .nav a i {
+    width: 20px;
+    font-size: 1.2rem;
+    color: var(--blue);
+    transition: color 0.3s ease;
+  }
+
+  /* Hover & active states */
+  .nav a:hover,
+  .nav a.active {
+    background: var(--blue);
+    color: #0f1218;
+    box-shadow: 0 0 20px var(--glow);
+    transform: translateX(6px);
+  }
+  .nav a:hover i,
+  .nav a.active i {
+    color: #0f1218;
+  }
+
+  /* Sidebar footer */
+  .sidebar-footer {
+    margin-top: auto;
+    font-size: 0.7rem;
+    text-align: center;
+    color: var(--muted);
+    border-top: 1px solid rgba(255,255,255,.07);
+    padding-top: 12px;
+    user-select: none;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 3rem 2rem 2rem 2rem;
+    margin-left: 0;
+    transition: margin-left 0.4s ease, filter 0.4s ease;
+  }
+
+  /* Shift main content when sidebar is open */
+  .sidebar.open ~ .main {
+    margin-left: 280px;
+    filter: brightness(0.85);
+  }
+
+  /* Headings */
+  h1.main-title {
+    font-size: 2.8rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(90deg, var(--blue), #8affff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px var(--glow));
+    user-select: none;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    user-select: none;
+  }
+
+  /* Buttons */
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.8rem 1.8rem;
+    background: var(--blue);
+    color: #0f1218;
+    border: none;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 0 18px var(--glow);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    user-select: none;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn:hover {
+    box-shadow: 0 0 30px #00f4ff, 0 0 40px #00e6ff;
+    transform: scale(1.05);
+  }
+
+  /* Hero grid */
+  .hero {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .card {
+    background: #1b1f34;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 30px 60px -10px rgba(79,195,255,.3);
+    user-select: none;
+  }
+
+  .card h2 {
+    margin-top: 0;
+    font-size: 1.4rem;
+  }
+
+  .grid-short {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .small-card {
+    background: #1f233d;
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .small-card a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .small-card a:hover {
+    text-decoration: underline;
+  }
+
+  /* Shake animation */
+  .shake {
+    display: inline-block;
+    animation: shake 3s infinite;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translate(0); }
+    25% { transform: translate(1px, -1px); }
+    50% { transform: translate(-1px, 1px); }
+    75% { transform: translate(1px, 1px); }
+  }
+
+  /* Dark mode toggle button */
+  .dark-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--blue);
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: #0f1218;
+    cursor: pointer;
+    box-shadow: 0 0 12px var(--glow);
+    transition: background-color 0.3s ease;
+    z-index: 1200;
+    user-select: none;
+  }
+  .dark-toggle:hover {
+    background: #00baff;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 220px;
+      left: -220px;
+    }
+    .sidebar.open {
+      left: 0;
+    }
+    .sidebar.open ~ .main {
+      margin-left: 0;
+      filter: none;
+    }
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline id="bg-video">
+    <source src="backgroundvideo.mp4" type="video/webm">
+  </video>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Menu Button (Hamburger) -->
+  <button class="menu-btn" id="menu-btn" aria-label="Toggle menu" title="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Dark Mode Toggle Button -->
+  <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">Dark Mode</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="dot"></div>
+      <div>Gameness</div>
+    </div>
+    <nav class="nav">
+      <ul>
+  <li><a href="index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+  <li><a href="Game About page/minecraft.html"><i class="fas fa-gamepad"></i> About Games</a></li>
+  <li><a href="Game Donwloader/downloader.html"><i class="fas fa-download"></i> Game Downloader</a></li>
+  <li><a href="Game Gallery page/gamegallery.html"><i class="fas fa-images"></i> Game Gallery</a></li>
+  <li><a href="About Game Developers/about.html"><i class="fas fa-users"></i> Game Developers</a></li>
+  <li><a href="Game Library/library.html"><i class="fas fa-book"></i> Game Library</a></li>
+  <li><a href="Link/links.html"><i class="fas fa-link"></i> Links</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">Welcome, Ganidu Hemanga<br>&copy; 2025 Gameness Game</div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <h1 class="main-title animate__animated animate__fadeInDown">Welcome to <span style="color:#8affff;">Gameness Game</span></h1>
+    <div class="subtitle animate__animated animate__fadeInUp animate__delay-1s">By Ganidu Hemanga</div>
+
+    <div class="buttons animate__animated animate__fadeInUp animate__delay-2s">
+      <a class="btn" href="Game About page/minecraft.html">About Games</a>
+      <a class="btn" href="Game Gallery page/gamegallery.html">Game Gallery</a>
+      <a class="btn" href="About Game Developers/about.html">Game Developers</a>
+      <a class="btn" href="Game Library/library.html">Game Library</a>
+    </div>
+
+    <div class="hero">
+      <div class="card">
+        <h2 class="shake">Featured Game</h2>
+        <p>Spotlight on <strong>Shadow Strike</strong>, the neon cyberpunk action shooter with glowing effects.</p>
+        <div style="margin-top:8px;">
+          <a class="btn" href="https://youtu.be/EXTRzqVoneM?si=cBBriW-fALFhbiLn" id="play-trailer-btn">Play Trailer</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Quick Links</h2>
+        <div class="grid-short">
+          <div class="small-card"><strong>Gallery</strong><br><a href="Game Gallery page/gamegallery.html">Browse games</a></div>
+          <div class="small-card"><strong>Downloader</strong><br><a href="Game Donwloader/downloader.html">Get games</a></div>
+          <div class="small-card"><strong>Library</strong><br><a href="Game Library/library.html">Your collection</a></div>
+          <div class="small-card"><strong>Developers</strong><br><a href="About Game Developers/about.html">Team Info</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const sidebar = document.getElementById('sidebar');
+  const menuBtn = document.getElementById('menu-btn');
+  const darkToggle = document.getElementById('dark-toggle');
+
+  // Menu toggle
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    menuBtn.classList.toggle('active');
+  });
+
+  // Close sidebar when clicking outside of it
+  document.addEventListener('click', (e) => {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+      sidebar.classList.remove('open');
+      menuBtn.classList.remove('active');
+    }
+  });
+
+  // Custom cursor follow
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Dark mode toggle
+  darkToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    if(document.body.classList.contains('dark')) {
+      darkToggle.textContent = 'Light Mode';
+    } else {
+      darkToggle.textContent = 'Dark Mode';
+    }
+  });
+</script>
+
+</body>
+</html>
