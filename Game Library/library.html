@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Game Library - Gameness Game</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+  :root{
+    --bg:#0f1218;
+    --card:#0b0e14;
+    --blue:#4fc3ff;
+    --accent:#1f8cff;
+    --glow:rgba(79,195,255,0.12);
+    --text:#d9e2ff;
+    --muted:#9fb0d1;
+  }
+
+  /* Page base */
+  html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", system-ui, sans-serif;background:radial-gradient(circle at 10% 10%, #162033 0%, var(--bg) 60%);color:var(--text);-webkit-font-smoothing:antialiased}
+  .page {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Header */
+  header{
+    padding:22px 28px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 8px 40px var(--glow);
+    background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    position:sticky; top:0; z-index:40;
+  }
+  .brand {display:flex; align-items:center; gap:14px;}
+  .logo {
+    width:46px; height:46px; border-radius:10px;
+    background:linear-gradient(135deg,var(--blue),#8affff);
+    box-shadow:0 6px 20px rgba(79,195,255,0.12);
+    display:flex; align-items:center; justify-content:center; color:#071225; font-weight:800;
+  }
+  h1{font-size:1.25rem;margin:0; color:var(--blue); text-shadow:0 0 12px rgba(79,195,255,0.12);}
+  .subtitle{font-size:0.85rem;color:var(--muted); margin-top:2px}
+
+  /* Controls */
+  .controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .search {
+    display:flex; gap:8px; align-items:center;
+    background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:999px;
+    box-shadow: 0 4px 18px rgba(8,12,20,0.5);
+    min-width:220px;
+  }
+  .search input{ background:transparent; border:0; outline:0; color:var(--text); font-size:0.95rem; width:220px }
+  .select, .btn {
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    color:var(--text);
+    padding:8px 12px;
+    border-radius:10px;
+    font-size:0.95rem;
+    cursor:pointer;
+  }
+  .btn.primary {
+    background:linear-gradient(90deg,var(--blue),var(--accent));
+    color:#071225;
+    box-shadow:0 8px 28px rgba(31,140,255,0.12), 0 0 40px rgba(79,195,255,0.06);
+    border:none;
+  }
+
+  main {flex:1; padding:28px; max-width:1200px; margin:0 auto; width:100%;}
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap:18px;
+  }
+
+  /* Card */
+  .card {
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:12px;
+    padding:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 8px 26px rgba(8,12,20,0.6);
+    transition: transform .22s ease, box-shadow .22s ease;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .card:hover{ transform:translateY(-8px); box-shadow: 0 18px 46px rgba(31,140,255,0.08); }
+  .thumb {
+    height:140px; border-radius:10px; background-size:cover; background-position:center;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
+  }
+  .meta { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .title { font-weight:700; color:var(--blue); font-size:1rem }
+  .tags { font-size:0.8rem; color:var(--muted) }
+  .desc { font-size:0.9rem; color:#cfe8ff; opacity:0.95; line-height:1.35; max-height:3.1rem; overflow:hidden; text-overflow:ellipsis }
+  .card-footer { display:flex; justify-content:space-between; gap:8px; align-items:center; margin-top:auto }
+  .small { font-size:0.85rem; color:var(--muted) }
+
+  .pill {
+    background:rgba(79,195,255,0.06);
+    color:var(--blue);
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:0.82rem;
+    border:1px solid rgba(79,195,255,0.06);
+  }
+
+  .actions { display:flex; gap:8px; }
+  .actions a { text-decoration:none; padding:8px 12px; border-radius:8px; font-weight:600; font-size:0.9rem }
+  .actions a.play { background:linear-gradient(90deg,var(--blue),var(--accent)); color:#081425 }
+  .actions a.details { background:rgba(255,255,255,0.03); color:var(--text); border:1px solid rgba(255,255,255,0.04) }
+
+  /* Empty state */
+  .empty{ text-align:center; padding:60px 20px; color:var(--muted) }
+
+  /* Load more */
+  .load-more { display:flex; justify-content:center; margin:18px 0 }
+  /* Modal */
+  .modal-backdrop {
+    position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+    background:linear-gradient(180deg, rgba(2,6,12,0.6), rgba(2,6,12,0.8));
+    z-index:80;
+  }
+  .modal {
+    width:min(920px,95%); background:linear-gradient(180deg, rgba(10,14,20,0.95), rgba(6,10,16,0.98));
+    border-radius:12px; padding:20px; box-shadow:0 20px 60px rgba(0,0,0,0.6); border:1px solid rgba(79,195,255,0.06)
+  }
+  .modal-grid { display:grid; grid-template-columns: 1fr 300px; gap:18px; align-items:start }
+  .modal-thumb{ height:320px; border-radius:10px; background-size:cover; background-position:center }
+  .modal h2{ margin:0 0 6px 0; color:var(--blue) }
+  .modal p{ color:#cfe8ff; margin:0 0 10px 0 }
+  .close-btn { background:transparent; border:0; color:var(--muted); font-size:1.1rem; cursor:pointer; }
+  @media (max-width:880px){
+    .modal-grid{ grid-template-columns: 1fr; }
+    .modal-thumb{ height:220px }
+  }
+
+  /* small screens */
+  @media (max-width:700px){
+    .controls{ align-items:flex-start; }
+    .search input { width:110px }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="animate__animated animate__fadeInDown">
+    <div class="brand">
+      <div class="logo">GG</div>
+      <div>
+        <h1>Gameness Game — Library</h1>
+        <div class="subtitle">Search, filter, and open game pages — your curated collection</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="search" role="search" aria-label="Search games">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="searchInput" placeholder="Search games (title, tag)..." aria-label="Search games" />
+      </div>
+
+      <select id="categoryFilter" class="select" aria-label="Filter by category">
+        <option value="all">All Categories</option>
+        <option value="publishers">Publishers</option>
+        <option value="aaa">AAA / Renowned</option>
+        <option value="japanese">Iconic Japanese</option>
+        <option value="indie">Indie & Mid</option>
+        <option value="mobile">Mobile</option>
+      </select>
+
+      <select id="platformFilter" class="select" aria-label="Filter by platform">
+        <option value="all">All Platforms</option>
+        <option value="pc">PC</option>
+        <option value="console">Console</option>
+        <option value="mobile">Mobile</option>
+      </select>
+
+      <select id="sortBy" class="select" aria-label="Sort games">
+        <option value="featured">Featured</option>
+        <option value="name-asc">Name A → Z</option>
+        <option value="name-desc">Name Z → A</option>
+      </select>
+
+      <button id="resetBtn" class="btn" title="Reset filters">Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="results" class="grid animate__animated animate__fadeInUp" aria-live="polite"></section>
+
+    <div id="emptyState" class="empty" hidden>
+      No games found. Try different filters or search terms.
+    </div>
+
+    <div class="load-more">
+      <button id="loadMore" class="btn primary">Load more</button>
+    </div>
+  </main>
+
+  <footer style="padding:18px; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.02)">
+    © 2025 Gameness Game — Built with ❤️
+  </footer>
+</div>
+
+<!-- Modal -->
+<div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal animate__animated animate__zoomIn" role="document">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px;">
+      <div>
+        <h2 id="modalTitle"></h2>
+        <div class="small" id="modalTags"></div>
+      </div>
+      <div>
+        <button class="close-btn" id="modalClose" aria-label="Close dialog">✕</button>
+      </div>
+    </div>
+
+    <div class="modal-grid">
+      <div>
+        <div id="modalThumb" class="modal-thumb" style="background:#222"></div>
+        <p id="modalDesc" style="margin-top:12px"></p>
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <a id="modalPlay" class="actions play" href="#" target="_blank" rel="noopener">Play / Download</a>
+          <a id="modalMore" class="actions details" href="#" target="_blank" rel="noopener">Open Page</a>
+        </div>
+      </div>
+      <aside style="background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:8px;">
+        <div class="small" style="margin-bottom:8px">Platform</div>
+        <div id="modalPlatform" class="pill" style="margin-bottom:12px"></div>
+
+        <div class="small" style="margin-bottom:8px">Category</div>
+        <div id="modalCategory" class="pill" style="margin-bottom:12px"></div>
+
+        <div class="small" style="margin-bottom:8px">Developer / Publisher</div>
+        <div id="modalDev" style="color:var(--muted)"></div>
+
+        <div style="margin-top:14px">
+          <button id="copyLink" class="btn" style="width:100%;">Copy Link</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+/* -------------------------
+   Sample game data — edit easily
+   ------------------------- */
+const games = [
+  { id:1, title:"Minecraft", category:"indie", platform:["pc","console","mobile"], dev:"Mojang Studios", tags:["sandbox","creative"], thumb:"minecraft2.jpg", desc:"A sandbox game about placing blocks and going on adventures." , url:"#"},
+  { id:2, title:"Grand Theft Auto V", category:"aaa", platform:["pc","console"], dev:"Rockstar Games", tags:["open-world","action"], thumb:"GTAV-Review.jpg", desc:"An open-world action game with a sprawling city and stories.", url:"#"},
+  { id:3, title:"Hades", category:"indie", platform:["pc","console"], dev:"Supergiant Games", tags:["roguelike","action"], thumb:"hades.png", desc:"Fast-paced action roguelike from Supergiant Games.", url:"#"},
+  { id:4, title:"Elden Ring", category:"aaa", platform:["pc","console"], dev:"FromSoftware", tags:["rpg","soulslike"], thumb:"eldenring.jpg", desc:"A vast open-world action RPG from FromSoftware.", url:"#"},
+  { id:5, title:"Genshin Impact", category:"mobile", platform:["pc","mobile","console"], dev:"miHoYo", tags:["gacha","rpg"], thumb:"Genshin Impact.jpeg", desc:"Open-world action RPG with gacha elements.", url:"#"},
+  { id:6, title:"Among Us", category:"mobile", platform:["pc","mobile"], dev:"Innersloth", tags:["multiplayer","party"], thumb:"among us.jpg", desc:"Social deduction multiplayer game.", url:"#"},
+  { id:7, title:"The Witcher 3", category:"aaa", platform:["pc","console"], dev:"CD Projekt Red", tags:["rpg","story"], thumb:"thewitcher3.jpg", desc:"Story-rich open-world RPG.", url:"#"},
+  { id:8, title:"Cuphead", category:"indie", platform:["pc","console"], dev:"Studio MDHR", tags:["platformer","boss"], thumb:"Cuphead.jpg", desc:"Run-and-gun platformer with hand-drawn art.", url:"#"},
+  { id:9, title:"Clash of Clans", category:"mobile", platform:["mobile"], dev:"Supercell", tags:["strategy","mobile"], thumb:"https://via.placeholder.com/720x400?text=Clash+of+Clans", desc:"Famous mobile strategy game.", url:"#"},
+  { id:10, title:"Hollow Knight", category:"indie", platform:["pc","console"], dev:"Team Cherry", tags:["metroidvania","platformer"], thumb:"https://via.placeholder.com/720x400?text=Hollow+Knight", desc:"Beautiful metroidvania with tough fights and exploration.", url:"#"},
+  { id:11, title:"Fortnite", category:"aaa", platform:["pc","console","mobile"], dev:"Epic Games", tags:["battle-royale","multiplayer"], thumb:"https://via.placeholder.com/720x400?text=Fortnite", desc:"Popular battle royale with building mechanics.", url:"#"},
+  { id:12, title:"Resident Evil 4 (Remake)", category:"aaa", platform:["pc","console"], dev:"Capcom", tags:["horror","survival"], thumb:"https://via.placeholder.com/720x400?text=RE4", desc:"Reimagined survival-horror classic.", url:"#"},
+  { id:13, title:"Valheim", category:"indie", platform:["pc"], dev:"Iron Gate Studio", tags:["survival","co-op"], thumb:"https://via.placeholder.com/720x400?text=Valheim", desc:"Viking survival sandbox for co-op play.", url:"#"},
+  { id:14, title:"League of Legends", category:"mobile", platform:["pc","mobile"], dev:"Riot Games", tags:["moba","competitive"], thumb:"https://via.placeholder.com/720x400?text=LoL", desc:"Massively popular competitive MOBA.", url:"#"},
+  { id:15, title:"Baldur's Gate 3", category:"aaa", platform:["pc","console"], dev:"Larian Studios", tags:["rpg","turn-based"], thumb:"https://via.placeholder.com/720x400?text=BG3", desc:"Deep CRPG with branching choices and DnD roots.", url:"#"},
+  // Add more entries here as you like
+];
+
+/* -------------------------
+   UI state
+   ------------------------- */
+let visibleCount = 8; // initial cards
+const perPage = 8;
+
+/* -------------------------
+   Helper & rendering
+   ------------------------- */
+const resultsEl = document.getElementById('results');
+const emptyEl = document.getElementById('emptyState');
+const loadMoreBtn = document.getElementById('loadMore');
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const platformFilter = document.getElementById('platformFilter');
+const sortBy = document.getElementById('sortBy');
+const resetBtn = document.getElementById('resetBtn');
+
+function renderCards(list){
+  resultsEl.innerHTML = '';
+  if(!list.length){
+    emptyEl.hidden = false;
+    loadMoreBtn.style.display = 'none';
+    return;
+  }
+  emptyEl.hidden = true;
+
+  const slice = list.slice(0, visibleCount);
+  for(const g of slice){
+    const card = document.createElement('article');
+    card.className = 'card animate__animated animate__fadeInUp';
+    card.innerHTML = `
+      <div class="thumb" style="background-image:url('${g.thumb}')"></div>
+      <div class="meta">
+        <div>
+          <div class="title">${g.title}</div>
+          <div class="tags small">${g.dev} • ${g.tags.join(', ')}</div>
+        </div>
+        <div class="pill">${g.platform.join(', ')}</div>
+      </div>
+      <div class="desc" title="${g.desc}">${g.desc}</div>
+      <div class="card-footer">
+        <div class="small">ID: ${g.id}</div>
+        <div class="actions">
+          <a href="${g.url}" class="play" target="_blank" rel="noopener">Play</a>
+          <a href="#" class="details" data-id="${g.id}">Details</a>
+        </div>
+      </div>
+    `;
+    resultsEl.appendChild(card);
+  }
+
+  // show/hide load more
+  loadMoreBtn.style.display = (visibleCount < list.length) ? 'inline-block' : 'none';
+  attachDetailsHandlers();
+}
+
+function attachDetailsHandlers(){
+  const btns = document.querySelectorAll('.details');
+  btns.forEach(b => {
+    b.onclick = (e) => {
+      e.preventDefault();
+      const id = Number(b.dataset.id);
+      openModalFor(id);
+    };
+  });
+}
+
+/* -------------------------
+   Filtering logic
+   ------------------------- */
+function filterAndSortData(){
+  const q = searchInput.value.trim().toLowerCase();
+  const cat = categoryFilter.value;
+  const plat = platformFilter.value;
+  const sort = sortBy.value;
+
+  let filtered = games.filter(g => {
+    // category filter
+    if(cat !== 'all'){
+      if(cat === 'publishers' && g.category !== 'publishers') return false;
+      if(cat !== 'publishers' && g.category !== cat) return false;
+    }
+    // platform filter
+    if(plat !== 'all'){
+      if(!g.platform.includes(plat)) return false;
+    }
+    // search
+    if(q){
+      const inTitle = g.title.toLowerCase().includes(q);
+      const inTags = g.tags.join(' ').toLowerCase().includes(q);
+      const inDev = (g.dev || '').toLowerCase().includes(q);
+      if(!(inTitle || inTags || inDev)) return false;
+    }
+    return true;
+  });
+
+  // sort
+  if(sort === 'name-asc') filtered.sort((a,b)=> a.title.localeCompare(b.title));
+  else if(sort === 'name-desc') filtered.sort((a,b)=> b.title.localeCompare(a.title));
+  // featured default — keep original order or you could prioritize favorites
+
+  return filtered;
+}
+
+function updateList(resetVisible=false){
+  if(resetVisible) visibleCount = perPage;
+  const list = filterAndSortData();
+  renderCards(list);
+}
+
+/* -------------------------
+   Interactions
+   ------------------------- */
+searchInput.addEventListener('input', ()=> { visibleCount = perPage; updateList(); });
+categoryFilter.addEventListener('change', ()=> { visibleCount = perPage; updateList(); });
+platformFilter.addEventListener('change', ()=> { visibleCount = perPage; updateList(); });
+sortBy.addEventListener('change', ()=> { updateList(); });
+resetBtn.addEventListener('click', ()=> {
+  searchInput.value=''; categoryFilter.value='all'; platformFilter.value='all'; sortBy.value='featured';
+  visibleCount = perPage; updateList();
+});
+
+loadMoreBtn.addEventListener('click', ()=>{
+  visibleCount += perPage;
+  updateList();
+});
+
+/* -------------------------
+   Modal behavior
+   ------------------------- */
+const modalBackdrop = document.getElementById('modalBackdrop');
+const modalClose = document.getElementById('modalClose');
+const modalTitle = document.getElementById('modalTitle');
+const modalTags = document.getElementById('modalTags');
+const modalThumb = document.getElementById('modalThumb');
+const modalDesc = document.getElementById('modalDesc');
+const modalPlatform = document.getElementById('modalPlatform');
+const modalCategory = document.getElementById('modalCategory');
+const modalDev = document.getElementById('modalDev');
+const modalPlay = document.getElementById('modalPlay');
+const modalMore = document.getElementById('modalMore');
+const copyLinkBtn = document.getElementById('copyLink');
+
+function openModalFor(id){
+  const g = games.find(x=> x.id === id);
+  if(!g) return;
+  modalTitle.textContent = g.title;
+  modalTags.textContent = g.tags.join(' • ');
+  modalThumb.style.backgroundImage = `url('${g.thumb}')`;
+  modalDesc.textContent = g.desc;
+  modalPlatform.textContent = g.platform.join(', ');
+  modalCategory.textContent = categoryLabel(g.category);
+  modalDev.textContent = g.dev || 'Unknown';
+  modalPlay.href = g.url || '#';
+  modalMore.href = g.url || '#';
+  modalBackdrop.style.display = 'flex';
+  modalBackdrop.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  // focus for accessibility
+  modalClose.focus();
+}
+
+function closeModal(){
+  modalBackdrop.style.display = 'none';
+  modalBackdrop.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+modalClose.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', (e)=> { if(e.target === modalBackdrop) closeModal(); });
+document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
+
+copyLinkBtn.addEventListener('click', ()=>{
+  const url = modalMore.href || window.location.href;
+  navigator.clipboard?.writeText(url).then(()=> {
+    copyLinkBtn.textContent = 'Link copied ✓';
+    setTimeout(()=> copyLinkBtn.textContent = 'Copy Link', 1800);
+  }).catch(()=> {
+    copyLinkBtn.textContent = 'Copy failed';
+    setTimeout(()=> copyLinkBtn.textContent = 'Copy Link', 1400);
+  });
+});
+
+function categoryLabel(c){
+  switch(c){
+    case 'publishers': return 'Major Publisher';
+    case 'aaa': return 'AAA / Renowned';
+    case 'japanese': return 'Iconic Japanese';
+    case 'indie': return 'Indie / Mid-sized';
+    case 'mobile': return 'Mobile';
+    default: return 'Other';
+  }
+}
+
+/* -------------------------
+   Initial render
+   ------------------------- */
+updateList(true);
+
+/* -------------------------
+   Accessibility nicety: reduce motion respect
+   ------------------------- */
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.documentElement.style.setProperty('--animate-duration', '0s');
+}
+</script>
+</body>
+</html>
