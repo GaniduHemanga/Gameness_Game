@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minecraft - About Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    :root {
+      --bg: #0f1218;
+      --blue: #4fc3ff;
+      --glow: rgba(79,195,255,.6);
+      --text: #d9e2ff;
+      --muted: #8a9bb8;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at 20% 30%, #1a2139 0%, var(--bg) 80%);
+      color: var(--text);
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin: 2rem 0 1rem;
+      text-align: center;
+      background: linear-gradient(90deg, var(--blue), #8affff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px var(--glow));
+    }
+
+    img {
+      display: block;
+      margin: 0 auto 2rem;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px var(--glow);
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: auto;
+      background: rgba(255,255,255,0.03);
+      padding: 20px 30px;
+      border-radius: 15px;
+      line-height: 1.8;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(79,195,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+
+    .emoji-title {
+      font-size: 22px;
+      margin-top: 20px;
+      color: var(--blue);
+      text-shadow: 0 0 10px var(--glow);
+      font-weight: bold;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 40px auto 0;
+      max-width: 1000px;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: var(--blue);
+      color: #0f1218;
+      box-shadow: 0 0 18px var(--glow);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-buttons a:hover {
+      box-shadow: 0 0 30px #00f4ff, 0 0 40px #00e6ff;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .nav-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="animate__animated animate__fadeInDown">Minecraft</h1>
+
+  <img src="minecraft.jpg" alt="Minecraft Image" class="animate__animated animate__fadeInUp">
+
+  <div class="content animate__animated animate__fadeInUp animate__delay-1s">
+    <div class="emoji-title">🟩 What is Minecraft?</div>
+    <p>Minecraft is a sandbox video game originally created by Markus "Notch" Persson and later developed by Mojang Studios, now owned by Microsoft. It was officially released on November 18, 2011, and is one of the best-selling video games of all time.</p>
+
+    <div class="emoji-title">🎮 Main Features:</div>
+    <ul>
+      <li><strong>Open World</strong> – No specific goals, you can do whatever you want.</li>
+      <li><strong>Block-Based World</strong> – The game world is made entirely of 3D blocks like dirt, stone, water, and lava.</li>
+    </ul>
+
+    <p><strong>Game Modes:</strong></p>
+    <ul>
+      <li>Survival Mode – Collect resources, build shelter, survive monsters.</li>
+      <li>Creative Mode – Unlimited blocks to build anything.</li>
+      <li>Adventure Mode – Custom maps and quests.</li>
+      <li>Hardcore Mode – Like Survival, but only one life.</li>
+      <li>Spectator Mode – Fly around and explore the world freely.</li>
+    </ul>
+
+    <div class="emoji-title">🌍 World of Minecraft:</div>
+    <ul>
+      <li>Biomes: Forests, deserts, oceans, caves, villages, and even dimensions like the Nether and The End.</li>
+      <li>Mobs: Zombies, Skeletons, Creepers, Cows, Chickens, Villagers, and more.</li>
+      <li>Bosses: Ender Dragon, Wither.</li>
+    </ul>
+
+    <div class="emoji-title">🧱 What Can You Do?</div>
+    <ul>
+      <li>Build anything – houses, castles, cities, pixel art.</li>
+      <li>Explore caves, oceans, and villages.</li>
+      <li>Craft tools, weapons, and food.</li>
+      <li>Fight enemies and survive the night.</li>
+      <li>Redstone Machines – Create working devices (like elevators or calculators) using in-game logic.</li>
+    </ul>
+
+    <div class="emoji-title">🧑‍🤝‍🧑 Multiplayer:</div>
+    <ul>
+      <li>LAN</li>
+      <li>Minecraft Realms</li>
+      <li>Dedicated Servers</li>
+    </ul>
+
+    <div class="emoji-title">📱 Platforms Available:</div>
+    <ul>
+      <li>PC (Java Edition & Bedrock)</li>
+      <li>Xbox, PlayStation, Nintendo Switch</li>
+      <li>Mobile (iOS & Android)</li>
+      <li>Web (Classic version)</li>
+    </ul>
+
+    <div class="emoji-title">🧠 Why is it Popular?</div>
+    <ul>
+      <li>Encourages creativity and imagination</li>
+      <li>Educational: Used in schools for teaching math, logic, teamwork, coding, etc.</li>
+      <li>Huge community with mods, texture packs, and servers.</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons animate__animated animate__fadeInUp animate__delay-2s">
+    <a href="indexcopy.html">← Home</a>
+    <a href="pubg.html">Next →</a>
+  </div>
+
+</body>
+</html>
