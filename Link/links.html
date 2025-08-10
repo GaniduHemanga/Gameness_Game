@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Links & Resources - Gameness Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --bg: #0f1218;
+            --blue: #4fc3ff;
+            --glow: rgba(79,195,255,.6);
+            --text: #d9e2ff;
+            --muted: #8a9bb8;
+            --accent: #1f8cff;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle at 20% 30%, #1a2139 0%, var(--bg) 80%);
+            color: var(--text);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin: 2rem 0 1rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--blue), #8affff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px var(--glow));
+        }
+        
+        .content {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255,255,255,0.03);
+            padding: 20px 30px;
+            border-radius: 15px;
+            line-height: 1.8;
+            font-size: 18px;
+            box-shadow: 0 0 20px rgba(79,195,255,0.1);
+            backdrop-filter: blur(4px);
+        }
+
+        .page-intro {
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .links-section {
+            padding: 1.5rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+
+        .links-section:last-child {
+            border-bottom: none;
+        }
+
+        .emoji-title {
+            font-size: 22px;
+            margin-top: 0;
+            color: var(--blue);
+            text-shadow: 0 0 10px var(--glow);
+            font-weight: bold;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            background-color: rgba(31, 140, 255, 0.1);
+            box-shadow: 0 0 10px var(--accent);
+        }
+        
+        li a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+        
+        li p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="animate__animated animate__fadeInDown">Links & Resources</h1>
+    <p class="page-intro animate__animated animate__fadeIn animate__delay-1s">
+        A curated list of official websites, news outlets, and communities for your favorite games and developers.
+    </p>
+
+    <div class="content animate__animated animate__fadeInUp animate__delay-1s">
+        <div class="links-section">
+            <div class="emoji-title">🎮 Official Game Sites</div>
+            <ul>
+                <li>
+                    <a href="https://www.minecraft.net" target="_blank">Minecraft Official Website</a>
+                    <p>The definitive source for all things Minecraft, including game updates, news, and community events.</p>
+                </li>
+                <li>
+                    <a href="https://brawlstars.com" target="_blank">Brawl Stars Official Site</a>
+                    <p>Find the latest Brawler news, balance changes, and competitive event information from Supercell.</p>
+                </li>
+                <li>
+                    <a href="https://shadowfight.com" target="_blank">Shadow Fight Series</a>
+                    <p>Learn about the lore and latest installments of the martial arts-themed fighting game series.</p>
+                </li>
+                <li>
+                    <a href="https://www.ea.com/games/need-for-speed" target="_blank">Need for Speed Official Page</a>
+                    <p>Explore the full franchise, see new trailers, and get details on the latest releases.</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="links-section">
+            <div class="emoji-title">📰 Gaming News & Reviews</div>
+            <ul>
+                <li>
+                    <a href="https://www.ign.com" target="_blank">IGN</a>
+                    <p>A leading source for video game news, previews, reviews, and guides.</p>
+                </li>
+                <li>
+                    <a href="https://www.gamespot.com" target="_blank">GameSpot</a>
+                    <p>Comprehensive reviews, daily news, and video content for all major gaming platforms.</p>
+                </li>
+                <li>
+                    <a href="https://www.polygon.com" target="_blank">Polygon</a>
+                    <p>In-depth coverage and commentary on the gaming industry and culture.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="links-section">
+            <div class="emoji-title">📦 Platforms & Stores</div>
+            <ul>
+                <li>
+                    <a href="https://store.steampowered.com" target="_blank">Steam</a>
+                    <p>The world's largest digital storefront for PC games.</p>
+                </li>
+                <li>
+                    <a href="https://www.epicgames.com" target="_blank">Epic Games Store</a>
+                    <p>A popular digital game store known for its weekly free game giveaways.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="links-section">
+            <div class="emoji-title">👨‍💻 Game Developers</div>
+            <ul>
+                <li>
+                    <a href="https://mojang.com" target="_blank">Mojang Studios</a>
+                    <p>The creators of the Minecraft franchise.</p>
+                </li>
+                <li>
+                    <a href="https://www.supercell.com" target="_blank">Supercell</a>
+                    <p>The studio behind popular mobile titles like Brawl Stars, Clash of Clans, and Clash Royale.</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="links-section">
+            <div class="emoji-title">💬 Game Communities</div>
+            <ul>
+                <li>
+                    <a href="https://www.reddit.com/r/gaming/" target="_blank">r/gaming on Reddit</a>
+                    <p>A massive online forum for discussions, news, and memes about gaming.</p>
+                </li>
+                <li>
+                    <a href="https://www.twitch.tv" target="_blank">Twitch</a>
+                    <p>The leading live streaming platform for watching your favorite gamers play.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
