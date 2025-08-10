@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shadow Fight Series - About Games</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<style>
+:root {
+--bg: #0f1218;
+--blue: #4fc3ff;
+--glow: rgba(79,195,255,.6);
+--text: #d9e2ff;
+--muted: #8a9bb8;
+--shadow-color: #555; /* Color for shadow elements */
+}
+        
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(circle at 20% 30%, #1a2139 0%, var(--bg) 80%);
+        color: var(--text);
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        margin: 2rem 0 1rem;
+        text-align: center;
+        background: linear-gradient(90deg, var(--blue), #8affff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 20px var(--glow));
+    }
+
+        /* The image gallery container */
+        .image-gallery {
+            display: flex;
+            flex-direction: column; /* Stack images on small screens */
+            gap: 1.5rem; /* Spacing between images */
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--glow);
+            transition: transform 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px var(--blue);
+        }
+        
+        .content {
+        max-width: 1000px;
+        margin: auto;
+        background: rgba(255,255,255,0.03);
+        padding: 20px 30px;
+        border-radius: 15px;
+        line-height: 1.8;
+        font-size: 18px;
+        box-shadow: 0 0 20px rgba(79,195,255,0.1);
+        backdrop-filter: blur(4px);
+    }
+
+    .emoji-title {
+        font-size: 22px;
+        margin-top: 20px;
+        color: var(--blue);
+        text-shadow: 0 0 10px var(--glow);
+        font-weight: bold;
+    }
+
+    ul {
+        padding-left: 1.2rem;
+    }
+
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin: 40px auto 0;
+        max-width: 1000px;
+    }
+
+    .nav-buttons a {
+        text-decoration: none;
+        padding: 0.8rem 1.8rem;
+        border-radius: 999px;
+        font-size: 1rem;
+        font-weight: 600;
+        background: var(--blue);
+        color: #0f1218;
+        box-shadow: 0 0 18px var(--glow);
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-buttons a:hover {
+        box-shadow: 0 0 30px #00f4ff, 0 0 40px #00e6ff;
+        transform: scale(1.05);
+    }
+
+        /* Media query for larger screens */
+        @media (min-width: 600px) {
+             h1 {
+            font-size: 2rem;
+        }
+        }
+            .image-gallery {
+                flex-direction: row; /* Display images side-by-side */
+                justify-content: space-between;
+            }
+            
+            .image-gallery img {
+                width: 32%; /* Allocate space for 3 images with some gap */
+            }
+            .nav-buttons {
+            flex-direction: line;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <h1 class="animate__animated animate__fadeInDown">Shadow Fight</h1>
+
+    <div class="image-gallery animate__animated animate__fadeInUp animate__delay-1s">
+        <img src="Images/shadow-fight-2.jpg" alt="Description of Image 1">
+        <img src="Images/shadow fight 3.webp" alt="Description of Image 2">
+        <img src="Images/shadow fight 4.png" alt="Description of Image 3">
+    </div>
+
+    <div class="content animate__animated animate__fadeInUp animate__delay-1s">
+    <div class="emoji-title">🥋 What is Shadow Fight?</div>
+    <p>Shadow Fight is a series of 2D fighting games developed by Nekki. Known for its unique animation style where fighters are rendered as silhouettes, the series combines martial arts combat with role-playing elements.</p>
+
+    <div class="emoji-title">👤 Unique Visual Style:</div>
+    <ul>
+        <li><strong>Silhouette Fighters</strong> – Characters are depicted as dark silhouettes against vibrant backgrounds, emphasizing animation and fluidity of movement.</li>
+        <li><strong>Realistic Animation</strong> – Motion capture is often used to create realistic and impactful martial arts animations.</li>
+    </ul>
+
+    <div class="emoji-title">📜 Core Gameplay:</div>
+    <ul>
+        <li>Intuitive controls with virtual joysticks and buttons for movement, strikes, and special moves.</li>
+        <li>A wide variety of martial arts styles, weapons (swords, nunchaku, staves, etc.), and magical abilities to learn and master.</li>
+        <li>Engaging story modes where players progress through tournaments, fight powerful bosses, and uncover mysteries.</li>
+        <li>Character customization through equipment, skills, and perks.</li>
+    </ul>
+
+    <div class="emoji-title">⚔️ Main Games in the Series:</div>
+    <ul>
+        <li><strong>Shadow Fight (Mobile)</strong> – The original mobile game that introduced the silhouette fighting style.</li>
+        <li><strong>Shadow Fight 2</strong> – A direct sequel with an expanded storyline, new weapons, magic, and the introduction of demon bosses from other dimensions.</li>
+        <li><strong>Shadow Fight 3</strong> – A significant departure with fully 3D rendered characters and a more complex narrative, offering a different but still engaging experience.</li>
+        <li><strong>Shadow Fight Arena</strong> – An online multiplayer fighting game where players can build teams of heroes and battle against others in real-time.</li>
+    </ul>
+
+    <div class="emoji-title">🌍 Lore and Setting:</div>
+    <ul>
+        <li>Each game features a unique storyline, often centered around a hero battling against dark forces, powerful warlords, or interdimensional threats.</li>
+        <li>The worlds are rich with Eastern-inspired mythology and martial arts traditions.</li>
+    </ul>
+
+    <div class="emoji-title">⚙️ Key Features Across the Series:</div>
+    <ul>
+        <li>Deep and strategic combat systems that reward timing and precision.</li>
+        <li>A vast array of moves and combos to discover and utilize.</li>
+        <li>Regular updates with new content, events, and challenges.</li>
+        <li>Competitive multiplayer modes (especially in Shadow Fight Arena and later installments).</li>
+    </ul>
+
+    <div class="emoji-title">📱 Platforms Available:</div>
+    <ul>
+        <li> Primarily mobile platforms (iOS and Android).</li>
+        <li> Shadow Fight 2 has also been released on PC and Nintendo Switch.</li>
+    </ul>
+
+    <div class="emoji-title">❤️ Why is it Popular?</div>
+    <ul>
+        <li>The unique silhouette art style makes it visually distinctive.</li>
+        <li>The fluid and realistic martial arts animations are captivating.</li>
+        <li>The blend of fighting game mechanics with RPG progression offers depth and replayability.</li>
+        <li>It provides a compelling single-player experience alongside competitive multiplayer options.</li>
+    </ul>
+</div>
+
+<div class="nav-buttons animate__animated animate__fadeInUp animate__delay-2s">
+    <a href="fortnite.html">← Back</a>
+    <a href="brawlstars.html">Next →</a>
+</div>
+
+</body>
+</html>

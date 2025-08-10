@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --bg: #0f1218;
+            --blue: #4fc3ff;
+            --glow: rgba(79,195,255,.6);
+            --text: #d9e2ff;
+            --muted: #8a9bb8;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: radial-gradient(circle at 20% 30%, #1a2139 0%, var(--bg) 80%);
+            color: var(--text);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin: 0 0 2rem;
+            text-align: center;
+            background: linear-gradient(90deg, var(--blue), #8affff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 20px var(--glow));
+        }
+
+        /* The image gallery container */
+        .image-gallery {
+            display: flex;
+            flex-direction: column; /* Stack images on small screens */
+            gap: 1.5rem; /* Spacing between images */
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--glow);
+            transition: transform 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 30px var(--blue);
+        }
+        
+        /* Media query for larger screens */
+        @media (min-width: 768px) {
+            .image-gallery {
+                flex-direction: row; /* Display images side-by-side */
+                justify-content: space-between;
+            }
+            
+            .image-gallery img {
+                width: 32%; /* Allocate space for 3 images with some gap */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="animate__animated animate__fadeInDown">Image Gallery</h1>
+
+    <div class="image-gallery animate__animated animate__fadeInUp animate__delay-1s">
+        <img src="Fortnite.jpg" alt="Description of Image 1">
+        <img src="minecraft.jpg" alt="Description of Image 2">
+        <img src="pubg.jpg" alt="Description of Image 3">
+    </div>
+
+</body>
+</html>
+
+<div class="content animate__animated animate__fadeInUp animate__delay-1s">
+    <div class="emoji-title">🏎️ What is Need for Speed?</div>
+    <p>Need for Speed is a legendary racing game franchise published by Electronic Arts. Since its debut in 1994, the series has become famous for high-speed street racing, extensive car customization, and thrilling police pursuits.</p>
+
+    <div class="emoji-title">🛣️ Core Gameplay:</div>
+    <ul>
+        <li><strong>High-Speed Racing</strong> – Experience intense racing on city streets, mountain roads, and highways.</li>
+        <li><strong>Police Pursuits</strong> – Evade aggressive cops in high-stakes chases, a hallmark of many NFS titles.</li>
+        <li><strong>Car Customization</strong> – Tune and personalize your ride with a wide range of visual and performance upgrades.</li>
+        <li><strong>Open Worlds</strong> – Newer games in the series feature open-world environments for free-roaming and discovering challenges.</li>
+    </ul>
+
+    <div class="emoji-title">🎮 Key Games in the Series:</div>
+    <ul>
+        <li><strong>Need for Speed: Underground (2003)</strong> – Pioneered the street racing and customization focus, heavily inspired by car culture.</li>
+        <li><strong>Need for Speed: Most Wanted (2005)</strong> – Considered a fan-favorite, combining illegal street races with iconic police pursuits.</li>
+        <li><strong>Need for Speed: Heat (2019)</strong> – Featured a day/night cycle where players could participate in sanctioned daytime races and illegal nighttime street racing.</li>
+    </ul>
+
+    <div class="emoji-title">🌍 World and Progression:</div>
+    <ul>
+        <li>Players win races to earn money and reputation.</li>
+        <li>Money is used to buy new cars or upgrade existing ones.</li>
+        <li>Reputation helps you unlock new races and challenges.</li>
+        <li>The game's storylines often involve a rise from an unknown racer to the top of the street racing scene.</li>
+    </ul>
+
+    <div class="emoji-title">📱 Platforms Available:</div>
+    <ul>
+        <li>PC</li>
+        <li>PlayStation</li>
+        <li>Xbox</li>
+        <li>Nintendo Switch</li>
+        <li>Mobile (iOS & Android)</li>
+    </ul>
+    
+    <div class="emoji-title">⭐ Why is it Popular?</div>
+    <ul>
+        <li><strong>Arcade-Style Action</strong> – The games offer a perfect blend of realism and over-the-top, fun gameplay.</li>
+        <li><strong>Iconic Soundtracks</strong> – The series is known for its incredible soundtracks, featuring popular artists from various genres.</li>
+        <li><strong>Customization</strong> – The ability to build and race your dream car is a huge draw for fans.</li>
+    </ul>
+</div>
